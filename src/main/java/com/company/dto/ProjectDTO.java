@@ -1,5 +1,6 @@
 package com.company.dto;
 import com.company.enums.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,8 +19,16 @@ public class ProjectDTO {
     private LocalDate endDate;
     private String projectDetail;
     private Status projectStatus;
-
+    /*
+     * 🖍️...
+     * · @JsonProperty(access = JsonProperty.Access.READ_ONLY):
+     *   Jackson will ignore the field in the request body when we post a project. But we will see the field in the response body.
+     */
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int completeTaskCounts;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private int unfinishedTaskCounts;
+
+
 
 }
