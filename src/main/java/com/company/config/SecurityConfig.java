@@ -15,18 +15,20 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 /*
- * 🚩 Keycloak Manual:
- * · We configured everything on keycloak, and we created our users manually in keycloak.
+ * 🚩 Keycloak Auto:
+ * · We create users and save them in Keycloak through Spring.
  *
  * 🦋 Implementing Security
- * · Once we have registered a client on the Keycloak server and set up individual user accounts with roles,
- *   we can use Spring Security and the Keycloak Spring Boot Adapter.
- * · To set up a Protected Resource:
- * 1. Add the Spring Security and Keycloak dependencies to the pom.xml file.
+ * 0. We have registered a client and roles on the Keycloak server.
+ * 1. Add the below dependencies to the pom.xml file.
+ *    · spring-boot-starter-security · keycloak-spring-boot-starter · keycloak-admin-client · jboss-jaxrs-api_2.1_spec
  * 2. Configure the service to point to our Keycloak server in the application.properties.
- * 3. Create the SecurityConfig.java class and define what and who can access the service.
- *    · To define access control rules, we need to create a class and extend it from KeyCloakWebSecurityConfigurerAdapter class.
- *      And override the following methods: · configure() · configureGlobal() · sessionAuthenticationStrategy() ·KeycloakConfigResolver()
+ * 3. Create the KeycloakProperties class to read the keycloak information from application.properties.
+ * 4. Create the SecurityConfig.java class and define what and who can access the service.
+ *    To define access control rules, we need to create a class and extend it from KeyCloakWebSecurityConfigurerAdapter class.
+ *    And override the following methods: · configure() · configureGlobal() · sessionAuthenticationStrategy() ·KeycloakConfigResolver()
+ * 5. Created KeycloakService and its implementation class to create the user through Spring in Keycloak.
+ *
  * ❗️ Also, we used SecurityContextHolder in the ProjectServiceImpl and TaskServiceImpl.java classes.
  *    The SecurityContextHolder is where Spring Security stores the details of who is authenticated. Spring Security does
  *    not care how the SecurityContextHolder is populated. If it contains a value, it is used as the currently authenticated user.
