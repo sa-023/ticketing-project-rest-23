@@ -86,6 +86,7 @@ public class UserServiceImpl implements UserService {
             // While the flag of the userName changes in DB, we add the "-" sign at the end of the userName, so we can reuse it to create a new user.
             user.setUserName(user.getUserName() + "-" + user.getId());
             userRepository.save(user);
+            keycloakService.delete(username); // Will delete the user in keycloak automatically.
         }
     }
 
