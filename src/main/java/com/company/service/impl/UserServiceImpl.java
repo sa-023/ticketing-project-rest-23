@@ -3,6 +3,7 @@ import com.company.dto.ProjectDTO;
 import com.company.dto.TaskDTO;
 import com.company.dto.UserDTO;
 import com.company.entity.User;
+import com.company.exception.TicketingProjectException;
 import com.company.mapper.UserMapper;
 import com.company.repository.UserRepository;
 import com.company.service.KeycloakService;
@@ -79,17 +80,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(String username) { // The user will not be deleted from the database; only the flag (isDeleted) value will be changed.
+    public void delete(String username) throws TicketingProjectException { // The user will not be deleted from the database; only the flag (isDeleted) value will be changed.
         User user = userRepository.findByUserName(username);
         if (checkIfUserCanBeDeleted(user)) {
             user.setIsDeleted(true);
             // While the flag of the userName changes in DB, we add the "-" sign at the end of the userName, so we can reuse it to create a new user.
             user.setUserName(user.getUserName() + "-" + user.getId());
             userRepository.save(user);
+        }else {
+            throw new TicketingProjectException("User can not be deleted");
         }
     }
 
-    private boolean checkIfUserCanBeDeleted(User user) {
+    private boolean checkIfUserCanBeDeleted(User user) throws TicketingProjectException {
+        if (user == null) {
+            throw new TicketingProjectException("User not found");
+        }
         switch (user.getRole().getDescription()) {
             case "Manager":
                 List<ProjectDTO> projectDTOList = projectService.readAllByAssignedManager(user);

@@ -1,8 +1,6 @@
 package com.company.entity;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 /*
  * 🖍️...
@@ -10,6 +8,8 @@ import org.springframework.http.HttpStatus;
  */
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL) // If any ResponseWrapper field value returns null, it will be excluded from JSON output.
 public class ResponseWrapper {
