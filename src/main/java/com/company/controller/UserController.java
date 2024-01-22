@@ -1,5 +1,6 @@
 package com.company.controller;
 import com.company.annotation.DefaultExceptionMessage;
+import com.company.annotation.ExecutionTime;
 import com.company.dto.UserDTO;
 import com.company.entity.ResponseWrapper;
 import com.company.exception.TicketingProjectException;
@@ -22,6 +23,7 @@ public class UserController {
     }
 
 
+    @ExecutionTime // custom annotation to test AOP
     @GetMapping
     @RolesAllowed("Admin")
     @Operation(summary = "Get Users")
@@ -30,6 +32,7 @@ public class UserController {
         return ResponseEntity.ok(new ResponseWrapper("Users are successfully retrieved",userDTOList, HttpStatus.OK)); // OK -> 200
     }
 
+    @ExecutionTime
     @GetMapping("/{userName}")
     @RolesAllowed("Admin")
     @Operation(summary = "Get User By Username")
