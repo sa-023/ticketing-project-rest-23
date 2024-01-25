@@ -3,6 +3,7 @@ import com.company.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
