@@ -29,10 +29,14 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 /*
  * 🖍️...
+ * · The stub is an interface that has a minimum count of methods to simulate the actual object.
+ *   It is an object that has preexisting data and returns a fixed value irrespective of input.
+ *
  * · While the @Mock annotation creates a complete mock, the @Spy annotation creates a "partial mock."
  *   With a partial mock, you can mock only specific methods of a real object, while other methods will retain their original behavior.
- * · When we spy on an object, the real methods are being called unless it's stubbed
+ *   When we spy on an object, the real methods are being called unless it's stubbed
  *
+ * · @InjectMocks: It creates an instance of the class and injects the mocks that are marked with the annotation @Mock into it.
  * · AssertJ: It is a Java library that provides writing assertions.
  *
  */
@@ -110,7 +114,8 @@ public class UserServiceUnitTest {
     @Test
     void should_find_user_by_username(){
         when(userRepository.findByUserNameAndIsDeleted(anyString(),anyBoolean())).thenReturn(user);
-        //lenient().when(userRepository.findAllByIsDeletedOrderByFirstNameDesc(false)).thenReturn(getUsers()); // stub calls stub, then we should use lenient().
+        // Lenient stubs bypass “strict stubbing” validation rules. Ex: When stubbing is declared as lenient, it won’t be checked for potential stubbing problems.
+        //lenient().when(userRepository.findAllByIsDeletedOrderByFirstNameDesc(false)).thenReturn(getUsers()); /
         UserDTO actualUserDTO = userService.findByUserName("user");
         UserDTO expectedUserDTO = userDTO;
         assertThat(actualUserDTO).usingRecursiveComparison().isEqualTo(expectedUserDTO);
